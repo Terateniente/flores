@@ -4,6 +4,7 @@ import type { FlowerData } from '../config'
 import { Flower } from './Flower'
 import { Fireflies } from './Fireflies'
 import { PetalRain } from './PetalRain'
+import { ImmersiveAtmosphere } from './ImmersiveAtmosphere'
 
 interface FlowerGardenProps {
   flowers: FlowerData[]
@@ -18,6 +19,7 @@ export function FlowerGarden({ flowers, count, surprise, glow, onCollect, onAdd 
   return (
     <div className="garden-scene">
       <div className="sky-grain" />
+      <ImmersiveAtmosphere />
       <div className="sunset-sun" />
       <div className="distant-hills hill-one" />
       <div className="distant-hills hill-two" />
@@ -31,6 +33,7 @@ export function FlowerGarden({ flowers, count, surprise, glow, onCollect, onAdd 
         {flowers.map((flower) => <Flower key={flower.id} flower={flower} active={glow} onCollect={onCollect} />)}
         <div className="foreground-grass" />
       </div>
+      <div className="foreground-depth" aria-hidden="true"><i /><i /><i /><i /></div>
       <motion.button className="add-flower" type="button" onClick={onAdd} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 4 }} whileHover={{ y: -3 }} whileTap={{ scale: 0.94 }}>
         <span><Plus size={16} /></span> Regalar otra flor
       </motion.button>

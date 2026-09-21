@@ -8,6 +8,7 @@ import { IntroScreen } from './components/IntroScreen'
 import { LoveLetter } from './components/LoveLetter'
 import { MusicPlayer } from './components/MusicPlayer'
 import { useFlowers } from './hooks/useFlowers'
+import { useParallax } from './hooks/useParallax'
 
 const story = [
   <>Dicen que el 21 de septiembre<br />se regalan flores amarillas...</>,
@@ -23,7 +24,9 @@ function App() {
   const [gardenGlow, setGardenGlow] = useState(false)
   const [musicSignal, setMusicSignal] = useState(0)
   const [burst, setBurst] = useState<{ x: number; y: number; nonce: number } | null>(null)
+  const [magicWave, setMagicWave] = useState(0)
   const { flowers, count, surprise, specialTaps, collectFlower, addFlower, celebrate } = useFlowers()
+  const parallaxRef = useParallax<HTMLDivElement>()
 
   useEffect(() => {
     if (!started) return
@@ -44,6 +47,7 @@ function App() {
     collectFlower(special)
     setBurst({ x, y, nonce: Date.now() })
     if (special) window.setTimeout(() => celebrate(config.specialMessage, 3500), 2900)
+    if (special) setMagicWave(Date.now())
   }
 
   const replay = () => {
@@ -67,7 +71,8 @@ function App() {
     <main className="experience-shell">
       <AnimatePresence mode="wait">{!started && <IntroScreen key="intro" onOpen={start} />}</AnimatePresence>
       {started && (
-        <motion.div className="experience" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4 }}>
+        <motion.div ref={parallaxRef} className="experience" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4 }}>
+          <div className="cinematic-reveal" aria-hidden="true" />
           <FlowerGarden flowers={flowers} count={count} surprise={surprise} glow={gardenGlow} onCollect={collect} onAdd={addFlower} />
           <MusicPlayer startSignal={musicSignal} />
           <div className="story-panel" aria-live="polite">
@@ -78,6 +83,7 @@ function App() {
           <LoveLetter open={letterOpen} onOpen={() => setLetterOpen(true)} onClose={() => setLetterOpen(false)} onHeart={() => celebrate('Este ya tiene dueña/o. 💛', 3200)} />
           <FinalMessage visible={finalVisible} onReplay={replay} onShare={share} />
           {specialTaps > 0 && <div className="special-found" aria-hidden="true" />}
+          {magicWave > 0 && <div key={magicWave} className="magic-wave" aria-hidden="true"><i /><i /><i /></div>}
         </motion.div>
       )}
       <FloatingParticles burst={burst} />

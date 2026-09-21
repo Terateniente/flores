@@ -58,4 +58,6 @@ El proyecto usa rutas relativas (`base: './'`), así que funciona en un subdirec
 - Cuatro clases de flores generadas con CSS y crecimiento escalonado.
 - Carta animada, contador, hitos en 5/10/20 flores y easter eggs.
 - Lluvia de pétalos, luciérnagas, partículas de cursor/toque y brillo final.
+- Profundidad inmersiva con parallax reactivo, nubes, auroras, rayos volumétricos, bokeh y estrellas fugaces.
+- Transición cinematográfica de entrada, ondas mágicas y efectos de luz que responden a las interacciones.
 - Audio local, Web Share API con respaldo al portapapeles y preferencias de movimiento reducido.

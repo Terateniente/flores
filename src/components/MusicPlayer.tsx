@@ -26,6 +26,7 @@ export function MusicPlayer({ startSignal }: { startSignal: number }) {
         {playing ? <Volume2 size={18} /> : <VolumeX size={18} />}
       </button>
       <span>{playing ? 'Nuestra melodía' : 'Música pausada'}</span>
+      {playing && <div className="sound-bars" aria-hidden="true"><i /><i /><i /></div>}
     </div>
   )
 }
